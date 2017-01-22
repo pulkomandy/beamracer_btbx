@@ -94,11 +94,12 @@ static int r, dr, ddr;
 // way as r with 1st and 2nd derivatives using a fixed point scheme.
 static int horizon, q, dq, ddq;
 
-void graph_frame() {
+void graph_vsync() {
+	if (vga_line != VGA_V_PIXELS) return;
 	// Curves are controlled with the mouse currently (for testing). They should
 	// come from the "track" data instead.
 	// We initialize ddr with the curve value (centered mouse / 2)
-	ddr = (data_mouse_x - 160) / 2;
+	ddr += mouse_x;
 
 	// dr starts as 0 so the road looks straight at the horizon. This isn't
 	// correct, it should start at (dr/2)² or so so the road looks straight
@@ -123,11 +124,11 @@ void graph_frame() {
 	// (but also more boring) feel.
 	q = 0;
 
-	if (data_mouse_buttons & mousebut_left) {
+	if (mouse_buttons & mousebut_left) {
 		dq = 1 << 14;
 		ddq = 100;
 		horizon = 100;
-	} else if (data_mouse_buttons & mousebut_right) {
+	} else if (mouse_buttons & mousebut_right) {
 		dq = 1<<16;
 		ddq = -300;
 		horizon = 128;

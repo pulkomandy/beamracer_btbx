@@ -1,1 +1,11 @@
 build
+*.bin
+*.elf
+*_emu
+
+*.swp
+*.map
+
+carsprite.c
+roadtex.c
+
